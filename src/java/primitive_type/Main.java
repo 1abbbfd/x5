@@ -164,7 +164,7 @@ public class Main {
         int negativeCount = containsZero
                 ? number.length - positiveCount - 1
                 : number.length - positiveCount;
-        System.out.println("среднее арифметическое отрицательных элементов " + (float) (negativeSum / (negativeCount)));
+        System.out.println("среднее арифметическое отрицательных элементов " + ((float) negativeSum / (negativeCount)));
     }
 
     //9

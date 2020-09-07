@@ -63,10 +63,10 @@ public class Main {
     //5
     static public void getSmallestNumber() {
         try (Scanner scanner = new Scanner(System.in)) {
-            int a = scanner.nextInt();
-            int b = scanner.nextInt();
-            int c = scanner.nextInt();
-            int[] number = new int[]{a, b, c};
+            int[] number = new int[3];
+            for (int i = 0; i < 3; i++) {
+                number[i] = scanner.nextInt();
+            }
             int min = number[0];
             for (int i = 1; i < number.length - 1; i++) {
                 if (min > number[i]) {

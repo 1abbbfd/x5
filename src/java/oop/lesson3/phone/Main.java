@@ -13,8 +13,6 @@ public class Main {
         for (Phone phone : phones) {
             System.out.println(phone.getNumber() + " " + phone.getModel() + " " + phone.getWeight());
             phone.receiveCall("Bob");
-            System.out.println(phone.getNumber());
-
         }
 
         firstPhone.receiveCall("Ivan", "+7 (800) 11-11-11");

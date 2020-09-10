@@ -2,8 +2,11 @@ package oop.lesson3.animal;
 
 public class Cat extends Animal {
     private static final String name = "Кот";
-    private static final String food = "мышь";
-    private static final String location = "дом";
+
+    public Cat() {
+        food = "мышь";
+        location = "дом";
+    }
 
     @Override
     public void makeNoise() {
@@ -17,13 +20,5 @@ public class Cat extends Animal {
 
     public String getName() {
         return name;
-    }
-
-    public String getFood() {
-        return food;
-    }
-
-    public String getLocation() {
-        return location;
     }
 }

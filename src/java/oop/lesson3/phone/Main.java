@@ -14,7 +14,6 @@ public class Main {
             System.out.println(phone.getNumber() + " " + phone.getModel() + " " + phone.getWeight());
             phone.receiveCall("Bob");
         }
-
         firstPhone.receiveCall("Ivan", "+7 (800) 11-11-11");
         firstPhone.sendMessage("+7 (800) 55-35-35", "+7 (800) 55-35-36", "+7 (800) 11-11-11");
     }

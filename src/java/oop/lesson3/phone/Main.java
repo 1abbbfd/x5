@@ -11,7 +11,7 @@ public class Main {
         Phone thirdPhone = new Phone("+7 (800) 55-35-37", "apple", 300);
         List<Phone> phones = Arrays.asList(firstPhone, secondPhone, thirdPhone);
         for (Phone phone : phones) {
-            System.out.println(phone);//Выведите на консоль значения их переменных.
+            System.out.println(phone.getNumber() + " " + phone.getModel() + " " + phone.getWeight());
             phone.receiveCall("Bob");
             System.out.println(phone.getNumber());
 

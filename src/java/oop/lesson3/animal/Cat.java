@@ -4,8 +4,7 @@ public class Cat extends Animal {
     private static final String name = "Кот";
 
     public Cat() {
-        food = "мышь";
-        location = "дом";
+        super("мышь", "дом");
     }
 
     @Override

@@ -1,10 +1,15 @@
 package oop.lesson3.animal;
 
 public class Cat extends Animal {
-    private static final String name = "Кот";
+    private String name;
 
-    public Cat() {
-        super("мышь", "дом");
+    public Cat(String name, String food, String location) {
+        super(food, location);
+        this.name = name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override

@@ -1,8 +1,8 @@
 package oop.lesson4.car;
 
 public class Lorry extends Car {
-    static final String TURN_RIGHT = "Грузовик направо";
-    static final String TURN_LEFT = "Грузовик налево";
+    static final String START = "Грузовик поехал";
+    static final String STOP = "Грузовик остановился";
     private final int carryingCapacity;
 
     public Lorry(String carModel, String carClass, int weight, int carryingCapacity, Engine engine) {
@@ -12,12 +12,12 @@ public class Lorry extends Car {
 
     @Override
     void start() {
-        System.out.println(TURN_RIGHT);
+        System.out.println(START);
     }
 
     @Override
     void stop() {
-        System.out.println(TURN_LEFT);
+        System.out.println(STOP);
     }
 
     @Override

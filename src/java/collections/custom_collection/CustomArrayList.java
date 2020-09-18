@@ -1,51 +1,59 @@
 package collections.custom_collection;
 
-public class CustomArrayList implements CustomCollection {
+public class CustomArrayList<E> implements CustomCollection {
     private int length = 8;
-    private Object[] array = new Object[8];
+    private E[] array;
     private int pointer = 0;
 
+    public CustomArrayList() {
+        this.array = (E[]) new Object[length];
+    }
 
     @Override
     public int size() {
-        return array.length;
+        return pointer;
     }
 
     @Override
     public void add(Object item) {
-        pointer++;
-        if (array.length == pointer) {
-            swap(this.array);
+        if (length == pointer) {
+            swap();
         }
-        array[pointer] = item;
+        array[pointer] = (E) item;
+        pointer++;
     }
 
     @Override
     public void remove(int index) {
-        Object[] temp = new Object[length];
-        int counter = 0;
-        for (Object o : array) {
-            if (counter == index) {
-                continue;
-            }
-            temp[counter] = o;
-            counter++;
+        if (pointer == 0) {
+            return;
         }
-        this.array = temp;
+        for (int i = index; i < pointer - 1; i++) {
+            this.array[i] = this.array[i + 1];
+        }
+        this.pointer -= 1;
     }
 
     @Override
     public void remove(Object item) {
-        Object[] temp = new Object[length];
-        int counter = 0;
-        for (Object o : array) {
-            if (o.equals(array[counter])) {
-                continue;
-            }
-            temp[counter] = o;
-            counter++;
+        if (pointer == 0) {
+            return;
         }
-        this.array = temp;
+        int index = -1;
+        for (int i = 0; i < pointer; i++) {
+            if (this.array[i].equals(item)) {
+                index = i;
+                break;
+            }
+        }
+        if (index == -1) {
+            return;
+        }
+
+        for (int i = index; i < pointer - 1; i++) {
+            this.array[i] = this.array[i + 1];
+        }
+        this.pointer -= 1;
     }
 
     @Override
@@ -55,12 +63,13 @@ public class CustomArrayList implements CustomCollection {
 
     @Override
     public void clear() {
-        this.array = new Object[8];
+        this.array = (E[]) new Object[8];
+        length = 8;
     }
 
-    private void swap(Object[] array) {
+    private void swap() {
         this.length *= 2;
-        Object[] temp = new Object[length];
+        E[] temp = (E[]) new Object[length];
         for (int i = 0; i < size(); i++) {
             temp[i] = this.array[i];
         }

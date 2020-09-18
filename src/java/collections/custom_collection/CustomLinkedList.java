@@ -1,44 +1,78 @@
 package collections.custom_collection;
 
-import java.util.LinkedList;
-import java.util.List;
+public class CustomLinkedList implements CustomCollection {
+    private Node root;
+    private int length = 0;
 
-public class CustomLinkedList<E> implements CustomCollection {
-    private class Node {
-        Object next;
-        Object prev;
+    private class Node<T> {
+        T element;
+        Node next;
+        Node prev;
+
+        public Node(T element, Node next, Node prev) {
+            this.element = element;
+            this.next = next;
+            this.prev = prev;
+        }
     }
 
-    private List<E> list = new LinkedList<>();
 
     @Override
     public int size() {
-        return list.size();
+        return length;
     }
 
     @Override
     public void add(Object item) {
-        list.add((E) item);
+        if (root == null) {
+            root = new Node(item, null, null);
+            length++;
+            return;
+        }
+
+        Node node = root;
+        while (true) {
+            if (node.next == null) {
+                node.next = new Node(item, null, node);
+                break;
+            }
+            node = node.next;
+        }
+        length++;
     }
 
     @Override
     public void remove(int index) {
-        E temp = list.get(index);
-        remove(temp);
+        Node node = root;
+        for (int i = 0; i < index; i++) {
+            node = node.next;
+        }
+        //TODO
+        length--;
+
     }
 
     @Override
     public void remove(Object item) {
-        list.remove(item);
+        Node node = root;
+        while (!node.equals(item)) {
+            node = node.next;
+        }
+        //TODO
+        length--;
     }
 
     @Override
     public Object get(int index) {
-        return list.get(index);
+        Node node = root;
+        for (int i = 0; i < index; i++) {
+            node = node.next;
+        }
+        return node.element;
     }
 
     @Override
     public void clear() {
-        list = new LinkedList<>();
+        root = null;
     }
 }

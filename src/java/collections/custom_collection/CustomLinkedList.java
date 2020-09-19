@@ -119,5 +119,6 @@ public class CustomLinkedList implements CustomCollection {
     @Override
     public void clear() {
         root = null;
+        length = -1;
     }
 }

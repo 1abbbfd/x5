@@ -1,6 +1,5 @@
 package collections.custom_collection;
 
-
 public interface CustomCollection<E> {
     int size();
 

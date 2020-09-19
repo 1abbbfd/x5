@@ -5,9 +5,9 @@ public class CustomLinkedList implements CustomCollection {
     private int pointer = -1;
 
     private class Node<E> {
-        E element;
-        Node next;
-        Node prev;
+        private E element;
+        private Node next;
+        private Node prev;
 
         public Node(E element, Node next, Node prev) {
             this.element = element;
@@ -68,18 +68,6 @@ public class CustomLinkedList implements CustomCollection {
         node.prev.next = node.next;
         node.next.prev = node.prev;
         pointer--;
-    }
-
-    public void print() {
-        Node node = root;
-        while (true) {
-            if (node.next == null) {
-                System.out.println(node.element);
-                break;
-            }
-            System.out.println(node.element);
-            node = node.next;
-        }
     }
 
     @Override

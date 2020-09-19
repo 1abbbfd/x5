@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Box<T extends Fruit> {
     private List<T> fruits = new ArrayList<>();
+
     private float weight = 0;
 
     public void addFruits(T fruit) {
@@ -20,8 +21,9 @@ public class Box<T extends Fruit> {
         return Double.compare(weight, box.getWeight()) == 0;
     }
 
-    public void swap() {
-        fruits = new ArrayList<>();
-        //TODO
+    public void swap(Box<T> box) {
+        this.fruits = new ArrayList<>();
+        this.fruits.addAll(box.fruits);
+        box.fruits = new ArrayList<>();
     }
 }

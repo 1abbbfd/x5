@@ -1,25 +1,39 @@
 package collections.custom_collection;
 
+import java.util.Objects;
+
 public class CustomLinkedList implements CustomCollection {
     private Node root;
-    private int length = 0;
+    private int length = -1;
 
-    private class Node<T> {
-        T element;
+    private class Node<E> {
+        E element;
         Node next;
         Node prev;
 
-        public Node(T element, Node next, Node prev) {
+        public Node(E element, Node next, Node prev) {
             this.element = element;
             this.next = next;
             this.prev = prev;
         }
-    }
 
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Node<?> node = (Node<?>) o;
+            return Objects.equals(element, node.element);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(element);
+        }
+    }
 
     @Override
     public int size() {
-        return length;
+        return length + 1;
     }
 
     @Override
@@ -29,7 +43,6 @@ public class CustomLinkedList implements CustomCollection {
             length++;
             return;
         }
-
         Node node = root;
         while (true) {
             if (node.next == null) {
@@ -43,22 +56,54 @@ public class CustomLinkedList implements CustomCollection {
 
     @Override
     public void remove(int index) {
+        if (index == 0) {
+            root = root.next;
+            root.prev = null;
+            length--;
+            return;
+        }
         Node node = root;
-        for (int i = 0; i < index; i++) {
+        for (int i = 0; i < index - 1; i++) {
             node = node.next;
         }
-        //TODO
+        node.prev.next = node.next;
+        node.next.prev = node.prev;
         length--;
+    }
 
+    public void print() {
+        Node node = root;
+        while (true) {
+            if (node.next == null) {
+                System.out.println(node.element);
+                break;
+            }
+            System.out.println(node.element);
+            node = node.next;
+        }
     }
 
     @Override
     public void remove(Object item) {
-        Node node = root;
-        while (!node.equals(item)) {
-            node = node.next;
+        if (root.equals(item)) {
+            root = root.next;
+            root.prev = null;
+            length--;
+            return;
         }
-        //TODO
+
+        Node node = root;
+        for (int i = 0; i < length; i++) {
+            node = node.next;
+            if (node.equals(item)) {
+                break;
+            }
+            if (i == length - 1) {
+                return;
+            }
+        }
+        node.prev.next = node.next;
+        node.next.prev = node.prev;
         length--;
     }
 

@@ -1,10 +1,8 @@
 package collections.custom_collection;
 
-import java.util.Objects;
-
 public class CustomLinkedList implements CustomCollection {
     private Node root;
-    private int length = -1;
+    private int pointer = -1;
 
     private class Node<E> {
         E element;
@@ -16,31 +14,18 @@ public class CustomLinkedList implements CustomCollection {
             this.next = next;
             this.prev = prev;
         }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            Node<?> node = (Node<?>) o;
-            return Objects.equals(element, node.element);
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(element);
-        }
     }
 
     @Override
     public int size() {
-        return length + 1;
+        return pointer + 1;
     }
 
     @Override
     public void add(Object item) {
         if (root == null) {
             root = new Node(item, null, null);
-            length++;
+            pointer++;
             return;
         }
         Node node = root;
@@ -51,24 +36,38 @@ public class CustomLinkedList implements CustomCollection {
             }
             node = node.next;
         }
-        length++;
+        pointer++;
     }
 
     @Override
     public void remove(int index) {
+        if (pointer == 0) {
+            root = null;
+            pointer--;
+            return;
+        }
+
         if (index == 0) {
             root = root.next;
             root.prev = null;
-            length--;
+            pointer--;
             return;
         }
+
+        if (index == pointer) {
+            root = root.next;
+            root.prev = null;
+            pointer--;
+            return;
+        }
+
         Node node = root;
         for (int i = 0; i < index - 1; i++) {
             node = node.next;
         }
         node.prev.next = node.next;
         node.next.prev = node.prev;
-        length--;
+        pointer--;
     }
 
     public void print() {
@@ -85,26 +84,34 @@ public class CustomLinkedList implements CustomCollection {
 
     @Override
     public void remove(Object item) {
-        if (root.equals(item)) {
+        if (pointer == 0 && root.element.equals(item)) {
+            root = null;
+            pointer = -1;
+            return;
+        }
+
+        if (root.element.equals(item)) {
             root = root.next;
             root.prev = null;
-            length--;
+            pointer--;
             return;
         }
 
         Node node = root;
-        for (int i = 0; i < length; i++) {
+        for (int i = 0; i < pointer; i++) {
             node = node.next;
-            if (node.equals(item)) {
+            if (node.element.equals(item)) {
+                if (i == pointer - 1) {
+                    node.prev.next = null;
+                    pointer--;
+                    return;
+                }
                 break;
-            }
-            if (i == length - 1) {
-                return;
             }
         }
         node.prev.next = node.next;
         node.next.prev = node.prev;
-        length--;
+        pointer--;
     }
 
     @Override
@@ -119,6 +126,6 @@ public class CustomLinkedList implements CustomCollection {
     @Override
     public void clear() {
         root = null;
-        length = -1;
+        pointer = -1;
     }
 }

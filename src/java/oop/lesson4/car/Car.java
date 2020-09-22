@@ -15,9 +15,9 @@ public abstract class Car {
         this.motor = motor;
     }
 
-    abstract void start();
+    protected abstract void start();
 
-    abstract void stop();
+    protected abstract void stop();
 
     public void turnRight() {
         System.out.println(TURN_RIGHT);
@@ -27,5 +27,5 @@ public abstract class Car {
         System.out.println(TURN_LEFT);
     }
 
-    abstract void printInfo();
+    protected abstract void printInfo();
 }

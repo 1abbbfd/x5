@@ -10,23 +10,20 @@ public class Lorry extends Car {
         this.carryingCapacity = carryingCapacity;
     }
 
-    @Override
-    void start() {
+    public void start() {
         System.out.println(START);
     }
 
-    @Override
-    void stop() {
+    public void stop() {
         System.out.println(STOP);
     }
 
-    @Override
-    void printInfo() {
+    public void printInfo() {
         System.out.println("Грузоподъемностью кузова: " + carryingCapacity);
         System.out.println("Марка автомобиля: " + super.carModel);
         System.out.println("Класс автомобиля: " + super.carClass);
         System.out.println("Вес автомобиля: " + super.weight);
-        System.out.println("Мощность мотора: " + super.motor.getManufacturer());
-        System.out.println("Производитель мотора: " + super.motor.getPower());
+        System.out.println("Мощность мотора: " + super.motor.getPower());
+        System.out.println("Производитель мотора: " + super.motor.getManufacturer());
     }
 }

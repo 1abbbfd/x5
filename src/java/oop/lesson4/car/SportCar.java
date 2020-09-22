@@ -8,23 +8,20 @@ public class SportCar extends Car {
         this.maxSpeed = maxSpeed;
     }
 
-    @Override
-    void start() {
+    public void start() {
         System.out.println("SportCar поехал");
     }
 
-    @Override
-    void stop() {
+    public void stop() {
         System.out.println("SportCar остановился");
     }
 
-    @Override
-    void printInfo() {
+    public void printInfo() {
         System.out.println("Предельная скорость: " + maxSpeed);
         System.out.println("Марка автомобиля: " + super.carModel);
         System.out.println("Класс автомобиля: " + super.carClass);
         System.out.println("Вес автомобиля: " + super.weight);
-        System.out.println("Мощность мотора: " + super.motor.getManufacturer());
-        System.out.println("Производитель мотора: " + super.motor.getPower());
+        System.out.println("Мощность мотора: " + super.motor.getPower());
+        System.out.println("Производитель мотора: " + super.motor.getManufacturer());
     }
 }

@@ -1,10 +1,15 @@
 package stream;
 
+import stream.exception.NotEnoughMoneyException;
+import stream.exception.UnknownAccountException;
+
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
 public class AccountManagement implements AccountService {
+    static final String NotEnoughMoneyException = "Не хватает денег на счете";
+    static final String UnknownAccountException = "Аккаунт с таким id отсутствует";
     static final String fileName = "accounts.txt";
     static final String path = "src/resources/" + fileName;
     private final File file;
@@ -83,28 +88,47 @@ public class AccountManagement implements AccountService {
     }
 
     @Override
-    public void withdraw(int accountId, int amount) {
+    public void withdraw(int accountId, int amount) throws UnknownAccountException, NotEnoughMoneyException {
         Account account = read(accountId);
+        if (account == null) {
+            throw new UnknownAccountException(UnknownAccountException);
+        }
+        if (account.getAmount() < amount) {
+            throw new NotEnoughMoneyException(NotEnoughMoneyException);
+        }
         account.withdraw(amount);
         rewrite(account);
     }
 
     @Override
-    public void balance(int accountId) {
-        System.out.println(read(accountId).toString());
+    public void balance(int accountId) throws UnknownAccountException {
+        Account account = read(accountId);
+        if (account == null) {
+            throw new UnknownAccountException(UnknownAccountException);
+        }
+        System.out.println(account.toString());
     }
 
     @Override
-    public void deposit(int accountId, int amount) {
+    public void deposit(int accountId, int amount) throws UnknownAccountException {
         Account account = read(accountId);
+        if (account == null) {
+            throw new UnknownAccountException(UnknownAccountException);
+        }
         account.put(amount);
         rewrite(account);
     }
 
     @Override
-    public void transfer(int from, int to, int amount) {
+    public void transfer(int from, int to, int amount) throws UnknownAccountException, NotEnoughMoneyException {
         Account accountFrom = read(from);
         Account accountTo = read(to);
+        if (accountFrom == null || accountTo == null) {
+            throw new UnknownAccountException(UnknownAccountException);
+        }
+        if (accountFrom.getAmount() < amount) {
+            throw new NotEnoughMoneyException(NotEnoughMoneyException);
+        }
         accountFrom.transferTo(accountTo, amount);
         rewrite(accountFrom);
     }
@@ -113,20 +137,35 @@ public class AccountManagement implements AccountService {
         String[] info = operation.split(" ");
         switch (info[0]) {
             case "balance":
-                balance(Integer.parseInt(info[1]));
+                try {
+                    balance(Integer.parseInt(info[1]));
+                } catch (UnknownAccountException e) {
+                    e.printStackTrace();
+                }
                 break;
             case "withdraw":
-                withdraw(Integer.parseInt(info[1]), Integer.parseInt(info[2]));
+                try {
+                    withdraw(Integer.parseInt(info[1]), Integer.parseInt(info[2]));
+                } catch (UnknownAccountException | NotEnoughMoneyException e) {
+                    e.printStackTrace();
+                }
                 break;
             case "deposite":
-                deposit(Integer.parseInt(info[1]), Integer.parseInt(info[2]));
+                try {
+                    deposit(Integer.parseInt(info[1]), Integer.parseInt(info[2]));
+                } catch (UnknownAccountException e) {
+                    e.printStackTrace();
+                }
                 break;
             case "transfer":
-                transfer(Integer.parseInt(info[1]), Integer.parseInt(info[2]), Integer.parseInt(info[2]));
+                try {
+                    transfer(Integer.parseInt(info[1]), Integer.parseInt(info[2]), Integer.parseInt(info[2]));
+                } catch (UnknownAccountException | NotEnoughMoneyException e) {
+                    e.printStackTrace();
+                }
                 break;
             default:
                 System.out.println("Operation not supported");
         }
     }
-
 }

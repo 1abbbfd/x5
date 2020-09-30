@@ -135,37 +135,41 @@ public class AccountManagement implements AccountService {
 
     public void manage(String operation) {
         String[] info = operation.split(" ");
-        switch (info[0]) {
-            case "balance":
-                try {
-                    balance(Integer.parseInt(info[1]));
-                } catch (UnknownAccountException e) {
-                    e.printStackTrace();
-                }
-                break;
-            case "withdraw":
-                try {
-                    withdraw(Integer.parseInt(info[1]), Integer.parseInt(info[2]));
-                } catch (UnknownAccountException | NotEnoughMoneyException e) {
-                    e.printStackTrace();
-                }
-                break;
-            case "deposite":
-                try {
-                    deposit(Integer.parseInt(info[1]), Integer.parseInt(info[2]));
-                } catch (UnknownAccountException e) {
-                    e.printStackTrace();
-                }
-                break;
-            case "transfer":
-                try {
-                    transfer(Integer.parseInt(info[1]), Integer.parseInt(info[2]), Integer.parseInt(info[2]));
-                } catch (UnknownAccountException | NotEnoughMoneyException e) {
-                    e.printStackTrace();
-                }
-                break;
-            default:
-                System.out.println("Operation not supported");
+        try {
+            switch (info[0]) {
+                case "balance":
+                    try {
+                        balance(Integer.parseInt(info[1]));
+                    } catch (UnknownAccountException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case "withdraw":
+                    try {
+                        withdraw(Integer.parseInt(info[1]), Integer.parseInt(info[2]));
+                    } catch (UnknownAccountException | NotEnoughMoneyException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case "deposite":
+                    try {
+                        deposit(Integer.parseInt(info[1]), Integer.parseInt(info[2]));
+                    } catch (UnknownAccountException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                case "transfer":
+                    try {
+                        transfer(Integer.parseInt(info[1]), Integer.parseInt(info[2]), Integer.parseInt(info[3]));
+                    } catch (UnknownAccountException | NotEnoughMoneyException e) {
+                        e.printStackTrace();
+                    }
+                    break;
+                default:
+                    System.out.println("Operation not supported");
+            }
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
         }
     }
 }

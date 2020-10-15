@@ -1,5 +1,5 @@
 package paterns.logger.loggers;
 
-public interface CustomLogger {
+public interface Logger {
     void log(String message);
 }

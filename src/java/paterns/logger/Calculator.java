@@ -1,9 +1,9 @@
 package paterns.logger;
 
-import paterns.logger.factories.LoggerFactory;
-import paterns.logger.loggers.CustomLogger;
+import paterns.logger.loggers.Logger;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static java.lang.String.format;
 
@@ -11,26 +11,17 @@ public class Calculator {
     final static String MISSING_OPERATOR = "missing operator";
     final static String DIVISION_BY_ZERO = "division by zero";
     final static String INVALID_ARGUMENTS = "invalid number of arguments";
-    private final CustomLogger customLogger;
+    private final Logger logger;
     private Number result;
 
-    public Calculator(CustomLogger logger) {
-        customLogger = logger;
+    public Calculator(Logger logger) {
+        this.logger = logger;
     }
 
     public Number calculate(String input) {
-        String operation = null;
-        for (char ch : input.toCharArray()) {
-            if (ch == '+' || ch == '/' || ch == '-' || ch == '*') {
-                operation = String.valueOf(ch);
-                break;
-            }
-        }
-        ArrayList<Float> numbers = new ArrayList<>();
         try {
-            for (String number : input.split("[" + operation + "]")) {
-                numbers.add(Float.valueOf(number.trim()));
-            }
+            String operation = Parser.getOperation(input);
+            List<Float> numbers = Parser.getOperators(input);
             switch (operation) {
                 case "+":
                     addition(numbers.get(0), numbers.get(1));
@@ -45,11 +36,12 @@ public class Calculator {
                     multiplication(numbers.get(0), numbers.get(1));
                     break;
             }
+            info(numbers.get(0), numbers.get(1), operation);
         } catch (NumberFormatException | IndexOutOfBoundsException e) {
-            customLogger.log(INVALID_ARGUMENTS + ": " + e.toString());
+            logger.log(INVALID_ARGUMENTS + ": " + e.toString());
             this.result = null;
         } catch (Exception e) {
-            customLogger.log(MISSING_OPERATOR + ": " + e.toString());
+            logger.log(MISSING_OPERATOR + ": " + e.toString());
             this.result = null;
         }
         return this.result;
@@ -57,12 +49,10 @@ public class Calculator {
 
     private void multiplication(float op1, float op2) {
         this.result = op1 * op2;
-        customLogger.log(format("%.2f * %.2f = %.2f", op1, op2, result));
     }
 
     private void addition(float op1, float op2) {
         this.result = op1 + op2;
-        customLogger.log(format("%.2f + %.2f = %.2f", op1, op2, result));
     }
 
     private void division(float op1, float op2) throws Exception {
@@ -70,11 +60,13 @@ public class Calculator {
             throw new Exception(format("Ошибка: %s", DIVISION_BY_ZERO));
         }
         this.result = op1 / op2;
-        customLogger.log(format("%.2f / %.2f = %.2f", op1, op2, result));
     }
 
     private void subtraction(float op1, float op2) {
         this.result = op1 - op2;
-        customLogger.log(format("%.2f - %.2f = %.2f", op1, op2, result));
+    }
+
+    private void info(float op1, float op2, String operation) {
+        logger.log(format("%.2f %s %.2f = %.2f", op1, operation, op2, this.result));
     }
 }

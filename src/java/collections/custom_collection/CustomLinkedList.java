@@ -29,7 +29,7 @@ public class CustomLinkedList implements CustomCollection {
             return;
         }
         Node node = root;
-        while (true) {
+        for (int i = 0; i < pointer; i++) {
             if (node.next == null) {
                 node.next = new Node(item, null, node);
                 break;
@@ -41,20 +41,18 @@ public class CustomLinkedList implements CustomCollection {
 
     @Override
     public void remove(int index) {
+        if (index > pointer) {
+            System.out.println("элемент отсутствует");
+            return;
+        }
+
         if (pointer == 0) {
             root = null;
             pointer--;
             return;
         }
 
-        if (index == 0) {
-            root = root.next;
-            root.prev = null;
-            pointer--;
-            return;
-        }
-
-        if (index == pointer) {
+        if (index == pointer || index == 0) {
             root = root.next;
             root.prev = null;
             pointer--;
@@ -104,6 +102,9 @@ public class CustomLinkedList implements CustomCollection {
 
     @Override
     public Object get(int index) {
+        if (index > pointer) {
+            return null;
+        }
         Node node = root;
         for (int i = 0; i < index; i++) {
             node = node.next;

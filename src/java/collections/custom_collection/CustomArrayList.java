@@ -46,11 +46,7 @@ public class CustomArrayList<E> implements CustomCollection {
             if (index == -1) {
                 return;
             }
-            for (int i = index; i < pointer; i++) {
-                array[i] = array[i + 1];
-            }
-            array[pointer] = null;
-            pointer--;
+            remove(index);
         }
     }
 
@@ -61,9 +57,10 @@ public class CustomArrayList<E> implements CustomCollection {
 
     @Override
     public void clear() {
-        array = (E[]) new Object[8];
-        pointer = -1;
         length = 8;
+        array = (E[]) new Object[length];
+        pointer = -1;
+
     }
 
     private void swap() {

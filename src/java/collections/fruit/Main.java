@@ -18,6 +18,10 @@ public class Main {
         System.out.println(oranges.compare(apples));
         System.out.println(apples.compare(oranges));
 
+        Box<Fruit> apple = new Box<>();
+        apple.addFruits(new Apple());
+        apple.addFruits(new Orange());
+
         apples.swap(oranges);
     }
 }

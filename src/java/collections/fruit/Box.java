@@ -9,6 +9,16 @@ public class Box<T extends Fruit> {
     private float weight = 0;
 
     public void addFruits(T fruit) {
+        if (fruits.size() > 0) {
+            if (fruits.get(fruits.size() - 1).weight != fruit.weight) {
+                try {
+                    throw new Exception("этот фрукт нельзя положить в коробку");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return;
+            }
+        }
         fruits.add(fruit);
         this.weight += fruit.weight;
     }

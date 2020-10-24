@@ -2,7 +2,6 @@ package paterns.logger;
 
 import paterns.logger.loggers.Logger;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static java.lang.String.format;
@@ -67,6 +66,6 @@ public class Calculator {
     }
 
     private void info(float op1, float op2, String operation) {
-        logger.log(format("%.2f %s %.2f = %.2f", op1, operation, op2, this.result));
+        logger.log(format("%.2f %s %.2f = %.2f", op1, operation, op2, this.result.floatValue()));
     }
 }

@@ -1,8 +1,6 @@
 package paterns.logger;
 
-import paterns.logger.factories.LoggerFactory;
 import paterns.logger.loggers.Logger;
-import paterns.logger.loggers.LoggerType;
 
 import static paterns.logger.loggers.LoggerType.*;
 

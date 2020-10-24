@@ -1,9 +1,8 @@
-package paterns.logger.factories;
+package paterns.logger;
 
 import paterns.logger.loggers.*;
 
-public class LoggerFactory extends AbstractLogger {
-    @Override
+public class LoggerFactory {
     public Logger createLogger(LoggerType loggerType) {
         switch (loggerType) {
             case DbLogger:
